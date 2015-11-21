@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Groups">
+        <menu>
+            <item
+                android:id="@+id/nav_create"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Create Group" />
+            <item
+                android:id="@+id/nav_lfg"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Look for Group" />
+            <item
+                android:id="@+id/nav_history"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Group History" />
+        </menu>
+    </item>
+
+    <item android:title="Profile">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_menu_share"
+                android:title="View Profile" />
+            <item
+                android:id="@+id/nav_edit"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Edit Profile" />
+        </menu>
+    </item>
+
+</menu>
