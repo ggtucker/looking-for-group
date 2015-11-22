@@ -1,4 +1,7 @@
-package com.alengeo.lfg.events;
+package com.alengeo.lfg.models;
+
+import com.alengeo.lfg.models.Location;
+import com.alengeo.lfg.models.SimpleUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,23 +13,56 @@ public class LockedEvent {
     private String _id;
     private String title;
     private String description;
-    private String location;
+    private Location location;
     private String time;
     private String category;
     private int minPeople;
     private int maxPeople;
     private int minAge;
     private int maxAge;
+    private int numPeople;
     private String organizer;
-    private List<String> attendees;
+    private List<SimpleUser> attendees;
+
+    public LockedEvent() {
+        this._id = "";
+        this.title = "";
+        this.description = "";
+        this.location = new Location();
+        this.time = "";
+        this.category = "";
+        this.minPeople = 0;
+        this.maxPeople = 0;
+        this.minAge = 0;
+        this.maxAge = 0;
+        this.numPeople = 0;
+        this.organizer = "";
+        this.attendees = new ArrayList<>();
+    }
 
     public LockedEvent(String title, String description, int numPeople) {
+        this();
         this.title = title;
         this.description = description;
-        this.attendees = new ArrayList<>();
-        for(int i = 0; i < numPeople; ++i) {
-            attendees.add("" + i);
-        }
+        this.numPeople = numPeople;
+    }
+
+    public LockedEvent(String _id, String title, String description, Location location, String time,
+                       String category, int minPeople, int maxPeople, int minAge, int maxAge,
+                       int numPeople, String organizer, List<SimpleUser> attendees) {
+        this._id = _id;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.time = time;
+        this.category = category;
+        this.minPeople = minPeople;
+        this.maxPeople = maxPeople;
+        this.minAge = minAge;
+        this.maxAge = maxAge;
+        this.numPeople = numPeople;
+        this.organizer = organizer;
+        this.attendees = attendees;
     }
 
     public String get_id() {
@@ -53,11 +89,11 @@ public class LockedEvent {
         this.description = description;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
@@ -118,14 +154,16 @@ public class LockedEvent {
     }
 
     public int getNumPeople() {
-        return attendees.size();
+        return numPeople;
     }
 
-    public List<String> getAttendees() {
+    public void setNumPeople(int numPeople) { this.numPeople = numPeople; }
+
+    public List<SimpleUser> getAttendees() {
         return attendees;
     }
 
-    public void setAttendees(List<String> attendees) {
+    public void setAttendees(List<SimpleUser> attendees) {
         this.attendees = attendees;
     }
 }

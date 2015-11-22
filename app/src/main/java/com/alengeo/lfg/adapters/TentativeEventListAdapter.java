@@ -1,4 +1,4 @@
-package com.alengeo.lfg.events;
+package com.alengeo.lfg.adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.alengeo.lfg.R;
+import com.alengeo.lfg.models.TentativeEvent;
 
 import java.util.List;
 

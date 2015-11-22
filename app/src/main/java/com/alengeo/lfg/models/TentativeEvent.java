@@ -1,4 +1,4 @@
-package com.alengeo.lfg.events;
+package com.alengeo.lfg.models;
 
 /**
  * List entry for an event not yet locked in.
@@ -15,12 +15,41 @@ public class TentativeEvent {
     private int maxAge;
     private int numPeople;
 
+    public TentativeEvent() {
+        this._id = "";
+        this.title = "";
+        this.description = "";
+        this.time = "";
+        this.category = "";
+        this.minPeople = 0;
+        this.maxPeople = 0;
+        this.minAge = 0;
+        this.maxAge = 0;
+        this.numPeople = 0;
+    }
+
     public TentativeEvent(String title, String description, int minPeople, int maxPeople,
                           int numPeople) {
+        this();
         this.title = title;
         this.description = description;
         this.minPeople = minPeople;
         this.maxPeople = maxPeople;
+        this.numPeople = numPeople;
+    }
+
+    public TentativeEvent(String _id, String title, String description, String time,
+                          String category, int minPeople, int maxPeople, int minAge, int maxAge,
+                          int numPeople) {
+        this._id = _id;
+        this.title = title;
+        this.description = description;
+        this.time = time;
+        this.category = category;
+        this.minPeople = minPeople;
+        this.maxPeople = maxPeople;
+        this.minAge = minAge;
+        this.maxAge = maxAge;
         this.numPeople = numPeople;
     }
 

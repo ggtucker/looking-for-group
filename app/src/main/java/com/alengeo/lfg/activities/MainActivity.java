@@ -1,5 +1,6 @@
 package com.alengeo.lfg.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,24 +14,22 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 
 import com.alengeo.lfg.R;
-import com.alengeo.lfg.events.LockedEvent;
-import com.alengeo.lfg.events.LockedEventListAdapter;
-import com.alengeo.lfg.events.TentativeEvent;
-import com.alengeo.lfg.events.TentativeEventListAdapter;
-
-import java.util.ArrayList;
+import com.alengeo.lfg.adapters.LockedEventListAdapter;
+import com.alengeo.lfg.adapters.TentativeEventListAdapter;
+import com.alengeo.lfg.models.User;
+import com.alengeo.lfg.sessions.SessionManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ArrayList<LockedEvent> upcomingEvents;
-    private ArrayList<TentativeEvent> organizedEvents;
-    private ArrayList<TentativeEvent> joinedEvents;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.sessionManager = new SessionManager(getApplicationContext());
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,29 +46,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     protected void loadEventLists() {
-        upcomingEvents = new ArrayList<>();
-        upcomingEvents.add(new LockedEvent("Title1", "Description1", 4));
-        upcomingEvents.add(new LockedEvent("Title2", "Description2", 5));
-        upcomingEvents.add(new LockedEvent("Title3", "Description3", 8));
-
-        organizedEvents = new ArrayList<>();
-        organizedEvents.add(new TentativeEvent("Title4", "Description4", 3, 5, 4));
-        organizedEvents.add(new TentativeEvent("Title5", "Description5", 5, 8, 2));
-        organizedEvents.add(new TentativeEvent("Title6", "Description6", 2, 4, 3));
-
-        joinedEvents = new ArrayList<>();
-        joinedEvents.add(new TentativeEvent("Title7", "Description7", 3, 5, 4));
-        joinedEvents.add(new TentativeEvent("Title8", "Description8", 5, 8, 2));
-        joinedEvents.add(new TentativeEvent("Title9", "Description9", 6, 12, 8));
+        User user = sessionManager.getUser();
 
         updateListLayout((LinearLayout) findViewById(R.id.upcoming_events),
-                new LockedEventListAdapter(this, upcomingEvents));
+                new LockedEventListAdapter(this, user.getUpcomingEvents()));
 
         updateListLayout((LinearLayout) findViewById(R.id.organized_events),
-                new TentativeEventListAdapter(this, organizedEvents));
+                new TentativeEventListAdapter(this, user.getOrganizedEvents()));
 
         updateListLayout((LinearLayout) findViewById(R.id.joined_events),
-                new TentativeEventListAdapter(this, joinedEvents));
+                new TentativeEventListAdapter(this, user.getJoinedEvents()));
     }
 
     protected void updateListLayout(LinearLayout layout, ListAdapter adapter) {
@@ -97,7 +83,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_create) {
-
+            Intent intent = new Intent(this, CreateGroupActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_lfg) {
 
         } else if (id == R.id.nav_history) {
@@ -106,6 +93,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_edit) {
 
+        } else if (id == R.id.nav_logout) {
+            sessionManager.logout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
