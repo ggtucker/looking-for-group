@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity
 
         if(intent != null) {
             startActivity(intent);
-            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

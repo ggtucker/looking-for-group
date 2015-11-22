@@ -52,7 +52,6 @@ public class GroupCategoriesActivity extends AppCompatActivity {
                             intent.putExtra("category", category);
                             intent.putExtra("events", eventsJson);
                             startActivity(intent);
-                            finish();
                         }
                     });
                 }

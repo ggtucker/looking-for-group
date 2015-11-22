@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" >
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="fill_parent"
+        android:layout_height="64dp"
+        android:id="@+id/event_header">
 
         <LinearLayout
             android:orientation="vertical"
@@ -79,8 +81,9 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
-                android:layout_gravity="center_horizontal|right"
-                android:layout_marginRight="20dp" />
+                android:layout_gravity="center_horizontal|end"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -90,9 +93,49 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
-                android:layout_gravity="center_horizontal|right"
-                android:layout_marginRight="20dp" />
+                android:layout_gravity="center_horizontal|end"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"/>
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_expandable"
+        android:background="#e2e2e2"
+        android:layout_gravity="center_vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="starts:"
+            android:id="@+id/event_start_time"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ends:"
+            android:id="@+id/event_end_time"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ages:"
+            android:id="@+id/event_age"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"/>
+
+    </LinearLayout>
+</LinearLayout>
