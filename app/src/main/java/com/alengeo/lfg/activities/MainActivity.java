@@ -89,12 +89,11 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Intent intent = null;
         if (id == R.id.nav_create) {
-            Intent intent = new Intent(this, CreateGroupActivity.class);
-            startActivity(intent);
-            finish();
+            intent = new Intent(this, CreateGroupActivity.class);
         } else if (id == R.id.nav_lfg) {
-
+            intent = new Intent(this, GroupCategoriesActivity.class);
         } else if (id == R.id.nav_history) {
 
         } else if (id == R.id.nav_profile) {
@@ -103,6 +102,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
             sessionManager.logout();
+        }
+
+        if(intent != null) {
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

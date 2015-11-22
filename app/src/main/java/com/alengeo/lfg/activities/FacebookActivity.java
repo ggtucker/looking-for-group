@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.alengeo.lfg.R;
 import com.alengeo.lfg.services.LoginService;
 import com.alengeo.lfg.sessions.SessionManager;
+import com.alengeo.lfg.util.LFGCallback;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -36,9 +37,9 @@ public class FacebookActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 String fbToken = loginResult.getAccessToken().getToken();
-                LoginService.authenticate(fbToken, sessionManager, new Runnable() {
+                LoginService.authenticate(fbToken, sessionManager, new LFGCallback<Void>() {
                     @Override
-                    public void run() {
+                    public void execute(Void v) {
                         if (sessionManager.isLoggedIn()) {
                             Intent intent = new Intent(FacebookActivity.this, MainActivity.class);
                             startActivity(intent);

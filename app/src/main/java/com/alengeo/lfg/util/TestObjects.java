@@ -1,4 +1,4 @@
-package com.alengeo.lfg;
+package com.alengeo.lfg.util;
 
 import com.alengeo.lfg.models.LockedEvent;
 import com.alengeo.lfg.models.TentativeEvent;

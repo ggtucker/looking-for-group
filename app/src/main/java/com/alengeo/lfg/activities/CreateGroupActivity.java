@@ -19,8 +19,11 @@ import com.alengeo.lfg.R;
 import com.alengeo.lfg.client.BackendApiClient;
 import com.alengeo.lfg.models.Location;
 import com.alengeo.lfg.models.LockedEvent;
+import com.alengeo.lfg.models.TentativeEvent;
+import com.alengeo.lfg.models.User;
 import com.alengeo.lfg.services.EventService;
 import com.alengeo.lfg.sessions.SessionManager;
+import com.alengeo.lfg.util.LFGCallback;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -75,9 +78,12 @@ public class CreateGroupActivity extends AppCompatActivity {
                 lockedEvent.setMinAge(getSpinnerInt(R.id.min_age));
                 lockedEvent.setMaxAge(getSpinnerInt(R.id.max_age));
 
-                EventService.createEvent(lockedEvent, sessionManager, new Runnable() {
+                EventService.createEvent(lockedEvent, sessionManager, new LFGCallback<TentativeEvent>() {
                     @Override
-                    public void run() {
+                    public void execute(TentativeEvent event) {
+                        User user = sessionManager.getUser();
+                        user.getOrganizedEvents().add(event);
+                        sessionManager.persistUser(user);
                         Intent intent = new Intent(CreateGroupActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -138,7 +144,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 
     private void registerDateTimeMinMaxAdapters() {
         // Configure min and max time and date spinner adapters
-        final List<String> minDateEntries = getTwoWeeksOfDatesFromToday();
+        final List<String> minDateEntries = getOneWeekOfDatesFromToday();
         final List<String> maxDateEntries = new ArrayList<>(minDateEntries);
 
         final List<String> timeEntries = getResourceList(R.array.event_times);
@@ -194,7 +200,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 boolean sameDay = minDateSpinner.getSelectedItem()
                         .equals(maxDateSpinner.getSelectedItem());
                 if (sameDay) {
-                    timeSelectedListener.onItemSelected(parent, view, position, id);
+                    timeSelectedListener.onItemSelected(parent, view, position+1, id);
                 } else {
                     timeSelectedListener.onNothingSelected(parent);
                 }
@@ -318,7 +324,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         lockTimeAdapter.notifyDataSetChanged();
     }
 
-    private List<String> getTwoWeeksOfDatesFromToday() {
+    private List<String> getOneWeekOfDatesFromToday() {
         List<String> dates = new ArrayList<>();
         DateFormat df = new SimpleDateFormat("EEEE MM/dd/yy");
         Date date = new Date();

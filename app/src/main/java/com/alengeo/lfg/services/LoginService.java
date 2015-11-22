@@ -1,6 +1,7 @@
 package com.alengeo.lfg.services;
 
-import com.alengeo.lfg.TestObjects;
+import com.alengeo.lfg.util.LFGCallback;
+import com.alengeo.lfg.util.TestObjects;
 import com.alengeo.lfg.client.BackendApiClient;
 import com.alengeo.lfg.models.User;
 import com.alengeo.lfg.sessions.SessionManager;
@@ -22,7 +23,7 @@ public class LoginService {
     private static final String FIELD_API_TOKEN = "api_token";
     private static final String FIELD_USER = "user";
 
-    public static void authenticate(String fbToken, final SessionManager sessionManager, final Runnable callback) {
+    public static void authenticate(String fbToken, final SessionManager sessionManager, final LFGCallback<Void> callback) {
         RequestParams params = sessionManager.getApiRequestParams();
         params.put(PARAM_ACCESS_TOKEN, fbToken);
         BackendApiClient.asyncPost(ENDPOINT_LOGIN, params, new JsonHttpResponseHandler() {
@@ -36,7 +37,7 @@ public class LoginService {
                     sessionManager.createSession(apiToken, user);
                     // Clear facebook session token. It's stored server-side.
                     LoginManager.getInstance().logOut();
-                    callback.run();
+                    callback.execute(null);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
