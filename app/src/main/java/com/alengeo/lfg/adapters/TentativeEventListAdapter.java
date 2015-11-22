@@ -35,7 +35,8 @@ public class TentativeEventListAdapter extends ArrayAdapter<TentativeEvent> {
         TentativeEvent entry = getItem(position);
         viewHolder.titleView.setText(entry.getTitle());
         viewHolder.descriptionView.setText(entry.getDescription());
-        viewHolder.peopleRangeView.setText(entry.getPeopleRange());
+        viewHolder.minPeopleView.setText("> " + entry.getMinPeople() + " people");
+        viewHolder.maxPeopleView.setText("< " + entry.getMaxPeople() + " people");
         viewHolder.numPeopleView.setText(""+entry.getNumPeople());
 
         return view;
@@ -44,13 +45,15 @@ public class TentativeEventListAdapter extends ArrayAdapter<TentativeEvent> {
     private class ViewHolder {
         public TextView titleView;
         public TextView descriptionView;
-        public TextView peopleRangeView;
+        public TextView minPeopleView;
+        public TextView maxPeopleView;
         public TextView numPeopleView;
 
         public ViewHolder(View view) {
             titleView = (TextView) view.findViewById(R.id.title);
             descriptionView = (TextView) view.findViewById(R.id.description);
-            peopleRangeView = (TextView) view.findViewById(R.id.people_range);
+            minPeopleView = (TextView) view.findViewById(R.id.min_people);
+            maxPeopleView = (TextView) view.findViewById(R.id.max_people);
             numPeopleView = (TextView) view.findViewById(R.id.num_people);
         }
     }

@@ -5,19 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.alengeo.lfg.activities.FacebookActivity;
-import com.alengeo.lfg.client.BackendApiClient;
 import com.alengeo.lfg.models.User;
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
-import com.loopj.android.http.PersistentCookieStore;
-
-import cz.msebera.android.httpclient.client.CookieStore;
-import cz.msebera.android.httpclient.cookie.ClientCookie;
-import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie;
+import com.loopj.android.http.RequestParams;
 
 public class SessionManager {
     private Context context;
-    private CookieStore cookieStore;
     private SharedPreferences pref;
 
     private static final int PRIVATE_MODE = 0;
@@ -27,12 +21,11 @@ public class SessionManager {
     private static final String API_KEY = "ApiToken";
     private static final String USER_KEY = "User";
 
-    private static final String COOKIE_API_TOKEN = "api_token";
+    private static final String API_TOKEN_PARAM = "api_token";
 
     public SessionManager(Context context){
         this.context = context;
         this.pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        setCookieStore(new PersistentCookieStore(context));
     }
 
     public void createSession(String apiToken, User user) {
@@ -43,18 +36,29 @@ public class SessionManager {
         editor.putString(API_KEY, apiToken);
         editor.putString(USER_KEY, gson.toJson(user));
         editor.commit();
+    }
 
-        BasicClientCookie cookie = new BasicClientCookie(COOKIE_API_TOKEN, apiToken);
-        cookie.setVersion(1);
-        cookie.setDomain("alengeo.com");
-        cookie.setPath("/");
-        addCookie(cookie);
+    public RequestParams getApiRequestParams() {
+        RequestParams params = new RequestParams();
+        params.put(API_TOKEN_PARAM, getApiToken());
+        return params;
+    }
+
+    public String getApiToken() {
+        return pref.getString(API_KEY, "");
     }
 
     public User getUser() {
         Gson gson = new Gson();
         String json = pref.getString(USER_KEY, "");
         return gson.fromJson(json, User.class);
+    }
+
+    public void persistUser(User user) {
+        SharedPreferences.Editor editor = pref.edit();
+        Gson gson = new Gson();
+        editor.putString(USER_KEY, gson.toJson(user));
+        editor.commit();
     }
 
     public void checkLogin() {
@@ -73,15 +77,6 @@ public class SessionManager {
 
     public boolean isLoggedIn() {
         return pref.getBoolean(LOGGED_IN_KEY, false);
-    }
-
-    public void setCookieStore(CookieStore cookieStore) {
-        this.cookieStore = cookieStore;
-        BackendApiClient.setCookieStore(cookieStore);
-    }
-
-    public void addCookie(ClientCookie cookie) {
-        cookieStore.addCookie(cookie);
     }
 
     private void redirectToLoginPage() {

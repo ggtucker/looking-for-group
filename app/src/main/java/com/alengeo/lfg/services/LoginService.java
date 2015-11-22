@@ -4,6 +4,7 @@ import com.alengeo.lfg.TestObjects;
 import com.alengeo.lfg.client.BackendApiClient;
 import com.alengeo.lfg.models.User;
 import com.alengeo.lfg.sessions.SessionManager;
+import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -21,11 +22,10 @@ public class LoginService {
     private static final String FIELD_API_TOKEN = "api_token";
     private static final String FIELD_USER = "user";
 
-    public static void authenticate(String fbToken, final SessionManager sessionManager) {
-        RequestParams params = new RequestParams();
-        System.out.println(PARAM_ACCESS_TOKEN + ": " + fbToken);
+    public static void authenticate(String fbToken, final SessionManager sessionManager, final Runnable callback) {
+        RequestParams params = sessionManager.getApiRequestParams();
         params.put(PARAM_ACCESS_TOKEN, fbToken);
-        BackendApiClient.post(ENDPOINT_LOGIN, params, new JsonHttpResponseHandler() {
+        BackendApiClient.asyncPost(ENDPOINT_LOGIN, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -34,10 +34,14 @@ public class LoginService {
                     Gson gson = new Gson();
                     User user = gson.fromJson(userJson, User.class);
                     sessionManager.createSession(apiToken, user);
+                    // Clear facebook session token. It's stored server-side.
+                    LoginManager.getInstance().logOut();
+                    callback.run();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 String testApiToken = "test_api_token";

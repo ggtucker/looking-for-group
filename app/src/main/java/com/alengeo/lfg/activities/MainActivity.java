@@ -45,6 +45,12 @@ public class MainActivity extends AppCompatActivity
         loadEventLists();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadEventLists();
+    }
+
     protected void loadEventLists() {
         User user = sessionManager.getUser();
 
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     protected void updateListLayout(LinearLayout layout, ListAdapter adapter) {
+        layout.removeAllViews();
         final int adapterCount = adapter.getCount();
         for(int i = 0; i < adapterCount; ++i) {
             View item = adapter.getView(i, null, null);
@@ -85,6 +92,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_create) {
             Intent intent = new Intent(this, CreateGroupActivity.class);
             startActivity(intent);
+            finish();
         } else if (id == R.id.nav_lfg) {
 
         } else if (id == R.id.nav_history) {

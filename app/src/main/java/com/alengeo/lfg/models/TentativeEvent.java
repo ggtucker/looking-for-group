@@ -7,8 +7,10 @@ public class TentativeEvent {
     private String _id;
     private String title;
     private String description;
-    private String time;
     private String category;
+    private String startTime;
+    private String endTime;
+    private String lockTime;
     private int minPeople;
     private int maxPeople;
     private int minAge;
@@ -19,8 +21,10 @@ public class TentativeEvent {
         this._id = "";
         this.title = "";
         this.description = "";
-        this.time = "";
         this.category = "";
+        this.startTime = "";
+        this.endTime = "";
+        this.lockTime = "";
         this.minPeople = 0;
         this.maxPeople = 0;
         this.minAge = 0;
@@ -28,8 +32,7 @@ public class TentativeEvent {
         this.numPeople = 0;
     }
 
-    public TentativeEvent(String title, String description, int minPeople, int maxPeople,
-                          int numPeople) {
+    public TentativeEvent(String title, String description, int minPeople, int maxPeople, int numPeople) {
         this();
         this.title = title;
         this.description = description;
@@ -38,14 +41,16 @@ public class TentativeEvent {
         this.numPeople = numPeople;
     }
 
-    public TentativeEvent(String _id, String title, String description, String time,
-                          String category, int minPeople, int maxPeople, int minAge, int maxAge,
-                          int numPeople) {
+    public TentativeEvent(String _id, String title, String description, String category,
+                          String startTime, String endTime, String lockTime, int minPeople, int maxPeople,
+                          int minAge, int maxAge, int numPeople) {
         this._id = _id;
         this.title = title;
         this.description = description;
-        this.time = time;
         this.category = category;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.lockTime = lockTime;
         this.minPeople = minPeople;
         this.maxPeople = maxPeople;
         this.minAge = minAge;
@@ -77,14 +82,6 @@ public class TentativeEvent {
         this.description = description;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -93,8 +90,28 @@ public class TentativeEvent {
         this.category = category;
     }
 
-    public String getPeopleRange() {
-        return minPeople + "-" + maxPeople;
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getLockTime() {
+        return lockTime;
+    }
+
+    public void setLockTime(String lockTime) {
+        this.lockTime = lockTime;
     }
 
     public int getMinPeople() {

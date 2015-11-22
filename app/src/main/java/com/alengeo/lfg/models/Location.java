@@ -5,8 +5,20 @@ public class Location {
     private String state;
 
     public Location() {
-        city = "";
-        state = "";
+        this.city = "";
+        this.state = "";
+    }
+
+    public Location(String cityAndState) {
+        assert cityAndState != null;
+        String[] split = cityAndState.trim().split(",");
+        if(split.length == 2) {
+            this.city = split[0].trim();
+            this.state = split[1].trim();
+        } else {
+            this.city = split[0];
+            this.state = split[0];
+        }
     }
 
     public Location(String city, String state) {

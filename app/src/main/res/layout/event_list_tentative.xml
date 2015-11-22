@@ -4,7 +4,8 @@
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:padding="6dip" >
 
-    <GridLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -12,9 +13,8 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:layout_weight="5">
 
             <TextView
                 android:id="@+id/title"
@@ -40,38 +40,59 @@
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4"
-            android:id="@+id/num_people"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:textSize="25dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:textColor="#21a400"
-            android:textStyle="bold"
-            android:layout_gravity="center_vertical" />
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical">
 
-        <TextView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:id="@+id/num_people"
+                android:textSize="25sp"
+                android:textColor="#21a400"
+                android:textStyle="bold"
+                android:layout_gravity="center" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/people_icon"
+                android:src="@drawable/person_icon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LF 3-5"
-            android:id="@+id/people_range"
-            android:layout_row="0"
-            android:layout_column="3"
-            android:textSize="25dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:textStyle="bold"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:textColor="#333333"
-            android:background="#D6D7D7"
-            android:padding="5dp" />
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical">
 
-    </GridLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="> 3 people"
+                android:id="@+id/min_people"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_gravity="center_horizontal|right"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="&lt; 5 people"
+                android:id="@+id/max_people"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_gravity="center_horizontal|right"
+                android:layout_marginRight="20dp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
