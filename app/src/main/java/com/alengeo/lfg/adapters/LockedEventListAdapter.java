@@ -19,7 +19,6 @@ import java.util.List;
 public class LockedEventListAdapter extends ArrayAdapter<LockedEvent> {
 
     private final LayoutInflater inflater;
-    private Animator animator;
 
     public LockedEventListAdapter(Activity context, List<LockedEvent> entries) {
         super(context, R.layout.event_list_locked, entries);
@@ -49,7 +48,7 @@ public class LockedEventListAdapter extends ArrayAdapter<LockedEvent> {
                 final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
                 vh.expandable.measure(widthSpec, heightSpec);
 
-                animator = slideAnimator(vh.expandable, 0, vh.expandable.getMeasuredHeight());
+                vh.animator = slideAnimator(vh.expandable, 0, vh.expandable.getMeasuredHeight());
                 return true;
             }
         });
@@ -58,8 +57,10 @@ public class LockedEventListAdapter extends ArrayAdapter<LockedEvent> {
             @Override
             public void onClick(View v) {
                 if (vh.expandable.getVisibility() == View.GONE) {
-                    expand(vh.expandable);
+                    System.out.println("expand");
+                    expand(vh.expandable, vh.animator);
                 } else {
+                    System.out.println("collapse");
                     collapse(vh.expandable);
                 }
             }
@@ -76,7 +77,7 @@ public class LockedEventListAdapter extends ArrayAdapter<LockedEvent> {
         return view;
     }
 
-    private void expand(LinearLayout expandable) {
+    private void expand(LinearLayout expandable, Animator animator) {
         expandable.setVisibility(View.VISIBLE);
         animator.start();
     }
@@ -132,6 +133,7 @@ public class LockedEventListAdapter extends ArrayAdapter<LockedEvent> {
         public TextView startTimeView;
         public TextView endTimeView;
         public TextView ageView;
+        public Animator animator;
 
         public ViewHolder(View view) {
             header = (LinearLayout) view.findViewById(R.id.event_header);

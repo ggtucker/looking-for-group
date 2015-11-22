@@ -3,7 +3,7 @@ package com.alengeo.lfg.client;
 import com.loopj.android.http.*;
 
 public class BackendApiClient {
-    private static final String BASE_URL = "http://allen.dev.bluepandasystems.com/";
+    private static final String BASE_URL = "http://lfg.mybluemix.net/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 

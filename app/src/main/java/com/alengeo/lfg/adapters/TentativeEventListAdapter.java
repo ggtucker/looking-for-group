@@ -19,7 +19,6 @@ import java.util.List;
 public class TentativeEventListAdapter extends ArrayAdapter<TentativeEvent> {
 
     private final LayoutInflater inflater;
-    private Animator animator;
 
     public TentativeEventListAdapter(Activity context, List<TentativeEvent> entries) {
         super(context, R.layout.event_list_tentative, entries);
@@ -49,7 +48,7 @@ public class TentativeEventListAdapter extends ArrayAdapter<TentativeEvent> {
                 final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
                 vh.expandable.measure(widthSpec, heightSpec);
 
-                animator = slideAnimator(vh.expandable, 0, vh.expandable.getMeasuredHeight());
+                vh.animator = slideAnimator(vh.expandable, 0, vh.expandable.getMeasuredHeight());
                 return true;
             }
         });
@@ -58,8 +57,10 @@ public class TentativeEventListAdapter extends ArrayAdapter<TentativeEvent> {
             @Override
             public void onClick(View v) {
                 if (vh.expandable.getVisibility() == View.GONE) {
-                    expand(vh.expandable);
+                    System.out.println("expand");
+                    expand(vh.expandable, vh.animator);
                 } else {
+                    System.out.println("collapse");
                     collapse(vh.expandable);
                 }
             }
@@ -78,7 +79,7 @@ public class TentativeEventListAdapter extends ArrayAdapter<TentativeEvent> {
         return view;
     }
 
-    private void expand(LinearLayout expandable) {
+    private void expand(LinearLayout expandable, Animator animator) {
         expandable.setVisibility(View.VISIBLE);
         animator.start();
     }
@@ -136,6 +137,7 @@ public class TentativeEventListAdapter extends ArrayAdapter<TentativeEvent> {
         public TextView startTimeView;
         public TextView endTimeView;
         public TextView ageView;
+        public Animator animator;
 
         public ViewHolder(View view) {
             header = (LinearLayout) view.findViewById(R.id.event_header);
